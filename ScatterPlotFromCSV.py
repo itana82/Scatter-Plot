@@ -28,6 +28,7 @@ import pandas as pd
 
 
 def save_plot(filename):
+    # File will be overwritten if it already exists.
     plt.savefig(filename)
 
     ext = mpl.rcParams["savefig.format"]

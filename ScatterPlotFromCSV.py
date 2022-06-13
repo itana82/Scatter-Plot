@@ -5,17 +5,14 @@ PLOT_TITLE = "Life Style and Life Expectancy"
 # program and does not contain real world data).
 CSV_PATH = 'example.csv'
 
-# Columns in the CSV file to be used for the x and y coordinate values 
-# of each dot in the plot.
-X_COL_NAME = "Mean hours exercise per week"
-Y_COL_NAME = "Mean units alcohol consumed per week"
-
-# Column in the CSV file to be used for the colour value of each dot in
-# the plot.
-Z_COL_NAME = "Life expectancy years"
+# Positions of the columns in the CSV file (where the 1st column is
+# column 0) from which to obtain the data.
+X_COL = 1
+Y_COL = 2
+Z_COL = 3
 
 # If plot file name does not have an extension then an extension such
-# as .png will be automatically added when the plot is saved.
+# as .png will be added automatically when the plot is saved.
 PLOT_FILE_NAME = 'scatter_plot'
 
 DOT_COLOUR_MAP = 'jet'
@@ -23,16 +20,7 @@ DOT_SIZE = 10
 
 
 import matplotlib.pyplot as plt
-import matplotlib as mpl
 import pandas as pd
-
-
-def save_plot(filename):
-    # File will be overwritten if it already exists.
-    plt.savefig(filename)
-
-    ext = mpl.rcParams["savefig.format"]
-    print("Saved plot as {}.{}".format(filename, ext))
 
 
 def main():
@@ -41,14 +29,16 @@ def main():
         df = pd.read_csv(CSV_PATH)
         df.plot(kind='scatter',
                       title=PLOT_TITLE,
-                      x=X_COL_NAME,
-                      y=Y_COL_NAME,
-                      c=Z_COL_NAME,
+                      x=X_COL,
+                      y=Y_COL,
+                      c=Z_COL, # Colour values.
                       s=DOT_SIZE,
                       colormap=DOT_COLOUR_MAP,
                       colorbar=True)
 
-        save_plot(PLOT_FILE_NAME)
+        plt.savefig(PLOT_FILE_NAME)
+        print("Saved plot in '{}'".format(PLOT_FILE_NAME))
+        
         plt.show()
     except Exception as e:
         print("Error: {}".format(str(e)))
